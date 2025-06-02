@@ -1,0 +1,29 @@
+pipeline{
+    agent any
+    stages{
+        stage('clone'){
+            steps{
+                git branch:'main', url:'https://github.com/PavanThumati/node-app.git'
+            }
+        }
+
+        stage('building and pushing docker iamge'){
+            steps{
+                withDockerRegistry([CredentialsId:'dockerhub-cred',url:'http://index.doxker/v1']){
+                    docker build -t pavanthumati/node-app:latest .
+                    docker push pavanthumati/node-app
+                }
+            }
+        }
+
+        stage('deploying the pods'){
+            steps{
+                withKubeConfig([CredentialsId:'kubeconfig-cred']){
+                    kubectl apply -f deployment.yaml
+                    kuubectl apply -f service.yaml
+                }
+            }
+        }
+    
+    }
+}
