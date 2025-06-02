@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: jsonapp
+  name: jsonapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jsonapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: jsonapp
+    spec:
+      containers:
+      - image: pavanthumati/node-app
+        name: node-app
+        resources: {}
+status: {}
