@@ -1,29 +1,32 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('clone'){
-            steps{
-                git branch:'main', url:'https://github.com/PavanThumati/jsonapp.git'
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git url: 'https://github.com/PavanThumati/jsonapp.git', branch: 'main'
             }
         }
 
-        stage('building and pushing docker iamge'){
-            steps{
-                withDockerRegistry([CredentialsId:'dockerhub-creds',url:'http://index.docker/v1']){
-                    docker build -t pavanthumati/node-app:latest .
-                    docker push pavanthumati/node-app
+        stage('Building and Pushing Docker Image') {
+            steps {
+                withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
+                    sh '''
+                        docker build -t pavanthumati/node-app:latest .
+                        docker push pavanthumati/node-app:latest
+                    '''
                 }
             }
         }
 
-        stage('deploying the pods'){
-            steps{
-                withKubeConfig([CredentialsId:'kubeconfig-cred']){
-                    kubectl apply -f deployment.yaml
-                    kuubectl apply -f service.yaml
+        stage('Deploying the Pods') {
+            steps {
+                withKubeConfig([credentialsId: 'kubeconfig-cred']) {
+                    sh '''
+                        kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml
+                    '''
                 }
             }
         }
-    
     }
 }
