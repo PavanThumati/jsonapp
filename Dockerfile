@@ -6,7 +6,8 @@ COPY package*.json /app
 
 RUN npm install --omit=dev && npm install express
 
-COPY . /app
+COPY . /app/
 
 EXPOSE 3000
+
 CMD ["npm", "app.js"]
