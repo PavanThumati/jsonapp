@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json /app
 
-RUN npm install -omit=dev && npm install express
+RUN npm install --omit=dev && npm install express
 
 COPY . /app
 
