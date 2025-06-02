@@ -3,13 +3,13 @@ pipeline{
     stages{
         stage('clone'){
             steps{
-                git branch:'main', url:'https://github.com/PavanThumati/node-app.git'
+                git branch:'main', url:'https://github.com/PavanThumati/jsonapp.git'
             }
         }
 
         stage('building and pushing docker iamge'){
             steps{
-                withDockerRegistry([CredentialsId:'dockerhub-cred',url:'http://index.doxker/v1']){
+                withDockerRegistry([CredentialsId:'dockerhub-creds',url:'http://index.doxker/v1']){
                     docker build -t pavanthumati/node-app:latest .
                     docker push pavanthumati/node-app
                 }
