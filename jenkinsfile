@@ -9,7 +9,7 @@ pipeline{
 
         stage('building and pushing docker iamge'){
             steps{
-                withDockerRegistry([CredentialsId:'dockerhub-creds',url:'http://index.doxker/v1']){
+                withDockerRegistry([CredentialsId:'dockerhub-creds',url:'http://index.docker/v1']){
                     docker build -t pavanthumati/node-app:latest .
                     docker push pavanthumati/node-app
                 }
