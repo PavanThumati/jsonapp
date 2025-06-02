@@ -2,11 +2,11 @@ FROM node:current-alpine
 
 WORKDIR /app
 
-COPY package*.json /app/
+COPY package*.json ./
 
 RUN npm install --omit=dev && npm install express
 
-COPY . /app/
+COPY . .
 
 EXPOSE 3000
 
