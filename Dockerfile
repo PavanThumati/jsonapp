@@ -2,7 +2,7 @@ FROM node:current-alpine
 
 WORKDIR /app
 
-COPY package*.json /app
+COPY package*.json /app/
 
 RUN npm install --omit=dev && npm install express
 
